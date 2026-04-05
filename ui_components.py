@@ -28,37 +28,47 @@ def inject_theme():
         .qa-link { color: #003882; text-decoration: none; font-weight: bold; }
         .qa-link:hover { text-decoration: underline; }
         
-        /* New styling for our inline PDF link */
-        .pdf-inline-link {
+        /* Renamed styling to apply to ALL inline download links */
+        .download-inline-link {
             color: #D4AF37; /* Metallic Gold */
             font-weight: bold;
             text-decoration: underline;
             margin-left: 5px;
         }
-        .pdf-inline-link:hover {
+        .download-inline-link:hover {
             color: #996515; /* Dark Gold on hover */
         }
     </style>
     """, unsafe_allow_html=True)
 
-# We cache this so Streamlit only reads the PDF file once, keeping your app lightning fast!
+# 1. The PDF Downloader
 @st.cache_data
 def get_pdf_download_link(pdf_path, link_text):
     if os.path.exists(pdf_path):
         with open(pdf_path, "rb") as f:
             base64_pdf = base64.b64encode(f.read()).decode('utf-8')
-        # Create the HTML link with the download attribute
-        return f'<a href="data:application/pdf;base64,{base64_pdf}" download="Bhavishya_Malika_QA_Book_Latest.pdf" class="pdf-inline-link">{link_text}</a>'
+        return f'<a href="data:application/pdf;base64,{base64_pdf}" download="Bhavishya_Malika_QA_Book_Latest.pdf" class="download-inline-link">{link_text}</a>'
+    return ""
+
+# 2. The NEW CSV Downloader
+@st.cache_data
+def get_csv_download_link(csv_path, link_text):
+    if os.path.exists(csv_path):
+        with open(csv_path, "rb") as f:
+            base64_csv = base64.b64encode(f.read()).decode('utf-8')
+        # Notice the data type changed to text/csv
+        return f'<a href="data:text/csv;base64,{base64_csv}" download="Q_and_A_Output.csv" class="download-inline-link">{link_text}</a>'
     return ""
 
 def render_headers():
     st.markdown('<h1 class="main-title">🕉️ Bhavishya Malika: Q&As</h1>', unsafe_allow_html=True)
     
-    # Generate the link (If the PDF doesn't exist in the folder, it just returns empty)
+    # Generate both links
     pdf_link_html = get_pdf_download_link("Bhavishya_Malika_QA_Book_Latest.pdf", "[All Q&A PDF]")
+    csv_link_html = get_csv_download_link("Q_and_A_Output.csv", "[All Q&A CSV]")
     
-    # Inject the link right at the end of your subtitle
-    st.markdown(f'<div class="sub-title">Ask a question, and App will search Pandit Ji\'s live sessions to give you a summarized answer. {pdf_link_html}</div>', unsafe_allow_html=True)
+    # Inject both links into the subtitle
+    st.markdown(f'<div class="sub-title">Ask a question, and App will search Pandit Ji\'s live sessions to give you a summarized answer. {pdf_link_html} {csv_link_html}</div>', unsafe_allow_html=True)
 
 def render_qa_card(row):
     q_text = str(row['Question']).replace('\n', '<br>')
