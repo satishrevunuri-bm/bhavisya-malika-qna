@@ -22,7 +22,7 @@ def generate_summary(user_query, top_results_df):
     prompt = f"""
     You are a spiritual assistant summarizing the teachings of Pandit Dr. Kashinath Mishra regarding the Bhavishya Malika.
     Based ONLY on the provided Q&As below, answer the user's query. 
-    Write a fluent, easy-to-read summary but cover maximum of important and relevant details in summary. If the Q&As do not contain the answer, politely state that the specific information was not found in the selected Q&As.
+    Write a fluent, easy-to-read summary, crispe but entire context covered. If the Q&As do not contain the answer, politely state that the specific information was not found in the selected Q&As.
     
     User Query: {user_query}
     

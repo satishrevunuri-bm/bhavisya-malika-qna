@@ -1,0 +1,25 @@
+# --- PROJECT SECRETS ---
+# Keeps your local API keys and configurations out of GitHub
+app_config.py
+
+# --- PYTHON RUNTIME FILES ---
+# Compiled Python files and cache directories
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- VIRTUAL ENVIRONMENTS ---
+# Ignores local environment setups if you ever use them
+venv/
+env/
+.venv/
+.env
+
+# --- STREAMLIT SECRETS ---
+# Ignores local Streamlit secrets files just to be safe
+.streamlit/secrets.toml
+
+# --- OS GENERATED FILES ---
+# Keeps Mac and Windows hidden system files out of your repo
+.DS_Store
+Thumbs.db

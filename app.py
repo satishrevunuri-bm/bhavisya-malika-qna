@@ -51,8 +51,8 @@ if submit_button and user_query:
             st.markdown('<h2 class="section-header">✨ AI Summary</h2>', unsafe_allow_html=True)
             
             with st.spinner("AI is reading the top matches and writing a summary..."):
-                top_17 = all_results.head(17)
-                summary_text, error = ai.generate_summary(user_query, top_17)
+                top_7 = all_results.head(7)
+                summary_text, error = ai.generate_summary(user_query, top_7)
                 
                 if error:
                     # Graceful warning if API limits are hit
